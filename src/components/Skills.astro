@@ -1,0 +1,89 @@
+---
+const skills = {
+    Frontend: [
+        "HTML5",
+        "CSS3",
+        "JavaScript (ES6+)",
+        "React",
+        "Astro",
+        "Tailwind CSS",
+    ],
+    Backend: ["Node.js", "Express", "Firebase", "SQL"],
+    Tools: ["Git", "GitHub", "VS Code", "Figma", "Postman"],
+};
+---
+
+<section class="skills">
+    <div class="container">
+        <h2>Habilidades Técnicas</h2>
+        <div class="skills-grid">
+            {
+                Object.entries(skills).map(([category, items]) => (
+                    <div class="skill-category">
+                        <h3>{category}</h3>
+                        <ul>
+                            {items.map((item) => (
+                                <li>{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .skills {
+        padding: 4rem 0;
+        background-color: #f9f9f9;
+    }
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 3rem;
+        color: #333;
+    }
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    .skill-category {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    h3 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: #007bff;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        margin-bottom: 0.5rem;
+        color: #555;
+        display: flex;
+        align-items: center;
+    }
+    li::before {
+        content: "•";
+        color: #007bff;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+</style>
