@@ -1,0 +1,229 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { projects } from "../../data/projects";
+
+export async function getStaticPaths() {
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout>
+    <article class="project-detail">
+        <header class="project-header">
+            <div class="container">
+                <h1>{project.title}</h1>
+                <p class="subtitle">{project.description}</p>
+                <div class="meta">
+                    <span class="role"
+                        ><strong>Rol:</strong> {project.role}</span
+                    >
+                    <span class="year"
+                        ><strong>Año:</strong> {project.year}</span
+                    >
+                </div>
+            </div>
+        </header>
+
+        <div class="container content-wrapper">
+            <div class="main-content">
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    class="main-image"
+                />
+
+                <div class="description">
+                    <h2>Sobre el Proyecto</h2>
+                    <p>{project.fullDescription}</p>
+                </div>
+
+                <div class="tech-stack">
+                    <h3>Tecnologías</h3>
+                    <div class="tags">
+                        {
+                            project.tags.map((tag) => (
+                                <span class="tag">{tag}</span>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="links-card">
+                    <h3>Enlaces</h3>
+                    <a
+                        href={project.repoLink}
+                        target="_blank"
+                        class="btn btn-outline"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path></svg
+                        >
+                        Ver Código
+                    </a>
+                    <a
+                        href={project.demoLink}
+                        target="_blank"
+                        class="btn btn-primary"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                            ></path><polyline points="15 3 21 3 21 9"
+                            ></polyline><line x1="10" y1="14" x2="21" y2="3"
+                            ></line></svg
+                        >
+                        Ver Demo
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </article>
+</Layout>
+
+<style>
+    .project-header {
+        background-color: #f8f9fa;
+        padding: 4rem 0;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #222;
+    }
+    .subtitle {
+        font-size: 1.25rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    .meta {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        color: #555;
+        font-size: 0.95rem;
+    }
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 3rem;
+        padding: 3rem 1rem;
+    }
+    @media (max-width: 768px) {
+        .content-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+    .main-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    p {
+        line-height: 1.7;
+        color: #444;
+        margin-bottom: 1.5rem;
+    }
+    .tech-stack {
+        margin-top: 2rem;
+    }
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .tag {
+        background-color: #f0f0f0;
+        color: #555;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+    .sidebar {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+    .links-card {
+        background: #fff;
+        padding: 1.5rem;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .links-card h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.8rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        transition: all 0.2s;
+    }
+    .btn:last-child {
+        margin-bottom: 0;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .btn-outline {
+        background-color: transparent;
+        color: #333;
+        border: 1px solid #ddd;
+    }
+    .btn-outline:hover {
+        border-color: #333;
+        background-color: #f9f9f9;
+    }
+</style>
